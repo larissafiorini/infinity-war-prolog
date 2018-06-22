@@ -11,21 +11,13 @@ nextto(yard, house).
 % (Space, Mind, Reality, Power, Soul, and Time)
 
 % stones
-loc(space,pen).
-loc(mind,pen).
-loc(reality,pen).
-loc(power,pen).
-loc(soul,pen).
-loc(time,pen).
-% heroes
-loc(thor,pen).
-loc(hulk,pen).
-loc(iron man,pen).
-loc(scarlet witch,pen).
-loc(the vision,pen).
-loc(captain america,pen).
-loc(spider man,pen).
-loc(doctor strange,pen).
+loc(space,asgard).
+loc(mind,wakanda).
+loc(reality,knowhere).
+loc(power,xander).
+loc(soul,vormir).
+loc(time,kamar-taj).
+
 
 loc(thanos,pen).
 
@@ -45,13 +37,28 @@ done :-
 	loc(power, thanos),
 	write("Thanos put the stone in his infinity gauntlet."), nl.
 
-demons :-
-	ducks,
-	fox.
+heroes :-
+	thanos,
+	thor,
+	hulk,
+	iron man,
+	scarlet-witch,
+	the-vision,
+	captain-america,
+	spider-man,
+	doctor-strange.
+	
+	loc(thor,asgard),
+	loc(hulk,knowhere),
+	loc(iron man,knowhere),
+	loc(scarlet witch,wakanda),
+	loc(the vision,wakanda),
+	loc(captain america,wakanda),
+	loc(spider man,knowhere),
+	loc(doctor strange,kamar-taj),
 
-ducks :-
-	loc(ducks, pen),
-	loc(you, pen),
+thanos :-
+	loc(thanos, knowhere),
 	move(ducks, yard),
 	write("The ducks have run into the yard."), nl.
 ducks.
