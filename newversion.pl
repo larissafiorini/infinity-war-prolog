@@ -1,8 +1,8 @@
 :- dynamic(loc/2).
 
 nextto(knowhere, asgard).
-nextto(asgard, house).
-nextto(house, knowhere).
+nextto(asgard, home).
+nextto(home, knowhere).
 nextto(knowhere, xandar).
 nextto(xandar, vormir).
 
@@ -26,7 +26,7 @@ connect(X,Y) :-
         nextto(Y,X).
 
 done :-
-	loc(thanos, house),
+	loc(thanos, home),
 	loc(reality, thanos),
 	loc(space, thanos),
 	loc(time, thanos),
@@ -50,7 +50,8 @@ thor :-
 	loc(starlord, wakanda),
 	loc(thanos, asgard),
 	write("Thor is in his home. He is the god of Asgard. You have lost Thanos."), nl.
-thor.
+	go.
+
 
 scarletwitch :-
 	loc(scarletwitch,wakanda),
