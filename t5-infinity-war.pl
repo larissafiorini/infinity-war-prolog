@@ -2,11 +2,15 @@
 
 nextto(knowhere, asgard).
 nextto(asgard, home).
+nextto(home, wakanda).
 
-loc(power,knowhere).
 loc(doctor-strange,knowhere).
 loc(thanos,knowhere).
+loc(spider-man,wakanda).
+
+loc(power,knowhere).
 loc(reality,asgard).
+loc(space,wakanda).
 
 move(Item, Place) :-
 	retract( loc(Item, _) ),
@@ -21,12 +25,13 @@ connect(X,Y) :-
 done :-
 	loc(thanos, home),
 	loc(power, thanos),
-	write("Thanks for getting the power."), nl.
+	loc(space, thanos),
+	write("Thanos have all the stones!"), nl.
 
 % define pessoas que se pode chase
-demons :-
+heroes :-
 	doctor-strange,
-	fox.
+	spider-man.
 
 doctor-strange :-
 	loc(doctor-strange, knowhere),
@@ -35,11 +40,11 @@ doctor-strange :-
 	write("The doctor-strange have run into the asgard."), nl.
 doctor-strange.
 
-fox :-
+spider-man :-
 	loc(doctor-strange, asgard),
 	loc(thanos, home),
-	write("The fox has taken a duck."), nl.
-fox.
+	write("The spider-man has taken a duck."), nl.
+spider-man.
 
 % move pessoa pra outro lugar. 
 goto(X) :-
@@ -54,7 +59,7 @@ goto(_) :-
 attack(doctor-strange) :-
 	loc(doctor-strange, L),
 	loc(thanos, L),
-	write("thanos hit the doctor-strange."),
+	write("thanos hit doctor-strange."),
 	take(reality).
 attack(_):-
 	write("No doctor-strange here."), nl.
@@ -71,6 +76,7 @@ chase(_):-
 
 % função que pega um item. Pode pegar se pessoa tiver no mesmo lugar q o item.
 take(X) :-
+	%X= reality -> write("reality") ; 
 	loc(thanos, L),
 	loc(X, L),
 	move(X, thanos),
@@ -132,7 +138,7 @@ go :-
 	read(X),
 	X \= quit,
 	do(X),
-	demons,
+	heroes,
 	!, go.
 go :- write(" Quitter "), nl.
 
