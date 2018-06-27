@@ -3,10 +3,12 @@
 nextto(knowhere, asgard).
 nextto(asgard, home).
 nextto(home, wakanda).
+nextto(wakanda, vormir).
 
 loc(doctor-strange,knowhere).
 loc(thanos,knowhere).
 loc(spider-man,wakanda).
+loc(black-widow,vormir).
 
 loc(power,knowhere).
 loc(time,asgard).
@@ -32,7 +34,8 @@ done :-
 % define pessoas que se pode chase
 heroes :-
 	doctor-strange,
-	spider-man.
+	spider-man,
+	black-widow.
 
 doctor-strange :-
 	loc(doctor-strange, knowhere),
@@ -42,10 +45,17 @@ doctor-strange :-
 doctor-strange.
 
 spider-man :-
-	loc(doctor-strange, asgard),
+	loc(spider-man, asgard),
 	loc(thanos, home),
-	write("The spider-man has taken a duck."), nl.
+	move(spider-man,vormir),
+	write("The spider-man have run into vormir."), nl.
 spider-man.
+
+black-widow :-
+	loc(black-widow, vormir),
+	loc(thanos, vormir),
+	write("The black widow seems to be calling to S.H.I.E.L.D. Be carefull."), nl.
+black-widow.
 
 % move pessoa pra outro lugar. 
 goto(X) :-
@@ -57,6 +67,11 @@ goto(_) :-
 	write("thanos can't get there from here."), nl.
 
 % comando novo. Attack heroe
+attack(black-widow) :-
+	loc(black-widow, L),
+	loc(thanos, L),
+	write("Thanos hit black-widow.... Congratulations! You now have the power stone."), nl,
+	move(power,thanos).
 attack(doctor-strange) :-
 	loc(doctor-strange, L),
 	loc(thanos, L),
@@ -83,9 +98,12 @@ chase(spider-man) :-
 	move(space, knowhere),
 	write("The spider-man are back in knowhere."), nl.
 chase(_):-
-	write("Spider man is not here."), nl.
+	write("The heroe is not here."), nl.
 
 % função que pega um item. Pode pegar se pessoa tiver no mesmo lugar q o item.
+take(power) :-
+	move(power,vormir),
+	write("Black widow passes behind you and take the power stone with her...You will need to attack her to get stone."), nl.
 take(time) :-
 	write("Doctor strange has the time stone and it won't give you without some fight..."), nl.
 take(space) :-
