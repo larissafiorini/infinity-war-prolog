@@ -74,7 +74,7 @@ goto(_) :-
 
 % if iron man tem armadura thanos perder, senão pega a pedra.
 attack(iron-man) :-
-	loc(armor,iron-man) -> write("You lost Thanos"),abort ;
+	loc(armor,iron-man) -> write("Iron man has his armor. No chance. You've lost Thanos!"), nl, abort ;
 	loc(iron-man, L),
 	loc(thanos, L),
 	write("Thanos hit doctor-strange.... Congratulations! You now have the reality stone."), nl,
