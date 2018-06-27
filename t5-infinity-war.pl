@@ -1,12 +1,12 @@
 :- dynamic(loc/2).
 
-nextto(pen, yard).
-nextto(yard, house).
+nextto(knowhere, asgard).
+nextto(asgard, home).
 
-loc(egg,pen).
-loc(ducks,pen).
-loc(you,pen).
-loc(reality,yard).
+loc(power,knowhere).
+loc(doctor-strange,knowhere).
+loc(thanos,knowhere).
+loc(reality,asgard).
 
 move(Item, Place) :-
 	retract( loc(Item, _) ),
@@ -19,91 +19,91 @@ connect(X,Y) :-
 
 % finaliza jogo
 done :-
-	loc(you, house),
-	loc(egg, you),
-	write("Thanks for getting the egg."), nl.
+	loc(thanos, home),
+	loc(power, thanos),
+	write("Thanks for getting the power."), nl.
 
 % define pessoas que se pode chase
 demons :-
-	ducks,
+	doctor-strange,
 	fox.
 
-ducks :-
-	loc(ducks, pen),
-	loc(you, pen),
-	move(ducks, yard),
-	write("The ducks have run into the yard."), nl.
-ducks.
+doctor-strange :-
+	loc(doctor-strange, knowhere),
+	loc(thanos, knowhere),
+	move(doctor-strange, asgard),
+	write("The doctor-strange have run into the asgard."), nl.
+doctor-strange.
 
 fox :-
-	loc(ducks, yard),
-	loc(you, house),
+	loc(doctor-strange, asgard),
+	loc(thanos, home),
 	write("The fox has taken a duck."), nl.
 fox.
 
 % move pessoa pra outro lugar. 
 goto(X) :-
-	loc(you, L),
+	loc(thanos, L),
 	connect(L, X),
-	move(you, X),
-	write("You are in the "), write(X), nl.
+	move(thanos, X),
+	write("thanos are in the "), write(X), nl.
 goto(_) :-
-	write("You can't get there from here."), nl.
+	write("thanos can't get there from here."), nl.
 
 % comando novo. Attack demon
-attack(ducks) :-
-	loc(ducks, L),
-	loc(you, L),
-	write("You hit the ducks."),
+attack(doctor-strange) :-
+	loc(doctor-strange, L),
+	loc(thanos, L),
+	write("thanos hit the doctor-strange."),
 	take(reality).
 attack(_):-
-	write("No ducks here."), nl.
+	write("No doctor-strange here."), nl.
 	
 
 % caça algum demon. Pode caçar se tiver no mesmo lugar.
-chase(ducks) :-
-	loc(ducks, L),
-	loc(you, L),
-	move(ducks, pen),
-	write("The ducks are back in their pen."), nl.
+chase(doctor-strange) :-
+	loc(doctor-strange, L),
+	loc(thanos, L),
+	move(doctor-strange, knowhere),
+	write("The doctor-strange are back in their knowhere."), nl.
 chase(_):-
-	write("No ducks here."), nl.
+	write("No doctor-strange here."), nl.
 
 % função que pega um item. Pode pegar se pessoa tiver no mesmo lugar q o item.
 take(X) :-
-	loc(you, L),
+	loc(thanos, L),
 	loc(X, L),
-	move(X, you),
-	write("You now have the "), write(X),write(" stone."), nl.
+	move(X, thanos),
+	write("thanos now have the "), write(X),write(" stone."), nl.
 take(X) :-
 	write("There is no "), write(X), write(" here."), nl.
 
 % mostra onde pessoa tá, o que tem e onde pode ir
 look :-
-	write("You are in the "),
-	loc(you, L), write(L), nl,
+	write("thanos are in the "),
+	loc(thanos, L), write(L), nl,
 	look_connect(L),
 	look_here(L),
-	look_have(you).
+	look_have(thanos).
 
 look_connect(L) :-
-	write("You can go to: "), nl,
+	write("thanos can go to: "), nl,
 	connect(L, CONNECT),
 	write(" "), write(CONNECT), nl,
 	fail.
 look_connect(_).
 
 look_have(X) :-
-	write("You have: "), nl,
+	write("thanos have: "), nl,
 	loc(THING, X),
 	write(" "), write(THING), nl,
 	fail.
 look_have(_).
 
 look_here(L) :-
-	write("You can see: "), nl,
+	write("thanos can see: "), nl,
 	loc(THING, L),
-	THING \= you,
+	THING \= thanos,
 	write(" "), write(THING), nl,
 	fail.
 look_here(_).
@@ -138,16 +138,15 @@ go :- write(" Quitter "), nl.
 
 instructions :-
 	nl,
-	write("You start in the house, the ducks and an egg"), nl,
-	write("are in the pen.  You have to get the egg"), nl,
-	write("without losing any ducks."), nl,
+	write("Thanos start in his home, with the gauntlet. "), nl,
+	write("Thanos have to get the others stones. "), nl,
 	nl,
 	write("Enter commands at the prompt as Prolog terms"), nl,
 	write("ending in period:"), nl,
 	write("  goto(X). - where X is a place to go to."), nl,
-	write("  attack(X). - where X is a demon you can attack to try to take their stone."), nl,
+	write("  attack(X). - where X is a demon thanos can attack to try to take their stone."), nl,
 	write("  take(X). - where X is a thing to take."), nl,
-	write("  chase(X). - chasing ducks sends them to the pen."), nl,
+	write("  chase(X). - chasing doctor-strange sends them to the knowhere."), nl,
 	write("  look. - the state of the game."), nl,
 	write("  help. - this information."), nl,
 	write("  quit. - exit the game."), nl,
@@ -156,6 +155,6 @@ instructions :-
 game :-
 	write(" Welcome to Duck World "),nl,
 	instructions,
-	write(" Go get an egg "),nl,
+	write(" Go get an power "),nl,
 	go.
 	
