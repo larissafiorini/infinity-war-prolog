@@ -9,7 +9,7 @@ loc(thanos,knowhere).
 loc(spider-man,wakanda).
 
 loc(power,knowhere).
-loc(reality,asgard).
+loc(time,asgard).
 loc(space,wakanda).
 
 move(Item, Place) :-
@@ -18,14 +18,15 @@ move(Item, Place) :-
 
 connect(X,Y) :-
         nextto(X,Y).
-connect(X,Y) :-
+connect(X,Y) :- 
         nextto(Y,X).
 
-% finaliza jogo
+% finaliza jogo quando thanos tiver todas joias e tiver em home
 done :-
 	loc(thanos, home),
 	loc(power, thanos),
 	loc(space, thanos),
+	loc(time, thanos),
 	write("Thanos have all the stones!"), nl.
 
 % define pessoas que se pode chase
@@ -55,30 +56,42 @@ goto(X) :-
 goto(_) :-
 	write("thanos can't get there from here."), nl.
 
-% comando novo. Attack demon
+% comando novo. Attack heroe
 attack(doctor-strange) :-
 	loc(doctor-strange, L),
 	loc(thanos, L),
-	write("thanos hit doctor-strange.... Congratulations! You now have the reality stone."), nl,
-	move(reality,thanos).
+	write("Thanos hit doctor-strange.... Congratulations! You now have the time stone."), nl,
+	move(time,thanos).
+attack(spider-man) :-
+	loc(spider-man, L),
+	loc(thanos, L),
+	write("Thanos hit spider-man.... Congratulations! You now have the space stone."), nl,
+	move(space,thanos).
+attack(X):-
+	loc(X, L),
+	loc(thanos, L),
+	write("Thanos hit "), write(X), nl.
 attack(_):-
-	write("No doctor-strange here."), nl.
+	write("The heroe is not here."), nl.
 	
 
-% caça algum demon. Pode caçar se tiver no mesmo lugar.
-chase(doctor-strange) :-
-	loc(doctor-strange, L),
+% caça algum heroe. Pode caçar se tiver no mesmo lugar.
+chase(spider-man) :-
+	loc(spider-man, L),
 	loc(thanos, L),
-	move(doctor-strange, knowhere),
-	write("The doctor-strange are back in their knowhere."), nl.
+	move(spider-man, knowhere),
+	move(space, knowhere),
+	write("The spider-man are back in knowhere."), nl.
 chase(_):-
-	write("No doctor-strange here."), nl.
+	write("Spider man is not here."), nl.
 
 % função que pega um item. Pode pegar se pessoa tiver no mesmo lugar q o item.
-take(reality) :-
-	write("Doctor strange has the reality stone and it won't give you without some fight..."), nl.
+take(time) :-
+	write("Doctor strange has the time stone and it won't give you without some fight..."), nl.
+take(space) :-
+	write("Spider-man has the space stone and it won't give you without some fight..."), nl.
 take(X) :-
-	%X= reality -> write("reality") ; 
+	%X= time -> write("time") ; 
 	loc(thanos, L),
 	loc(X, L),
 	move(X, thanos),
@@ -152,7 +165,7 @@ instructions :-
 	write("Enter commands at the prompt as Prolog terms"), nl,
 	write("ending in period:"), nl,
 	write("  goto(X). - where X is a place to go to."), nl,
-	write("  attack(X). - where X is a demon thanos can attack to try to take their stone."), nl,
+	write("  attack(X). - where X is a heroe Thanos can attack to try to take their stone."), nl,
 	write("  take(X). - where X is a thing to take."), nl,
 	write("  chase(X). - chasing doctor-strange sends them to the knowhere."), nl,
 	write("  look. - the state of the game."), nl,
@@ -161,8 +174,8 @@ instructions :-
 	nl.
 
 game :-
-	write(" Welcome to Duck World "),nl,
+	write(" Welcome to Infinity War "),nl,
 	instructions,
-	write(" Go get an power "),nl,
+	write(" Go get the infinity stones... "),nl,
 	go.
 	
