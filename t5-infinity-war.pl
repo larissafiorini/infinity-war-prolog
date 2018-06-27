@@ -91,6 +91,14 @@ attack(_):-
 	
 
 % caça algum heroe. Pode caçar se tiver no mesmo lugar.
+chase(black-widow) :-
+	write("The black widow came behind your back and make you fall.."), nl,
+	write("The spider-man is attacking your hand that has the gauntlet..."), nl,
+	write("Doctor strange is doing something with his fingers..."), nl,
+	write("The last thing you see is iron man coming in your direction..."), nl,
+	write("The gauntlet is no longer in your hand! Game over Thanos!"), nl,
+	abort.
+	% ACHAR FORMA DE ACABAR PROGRAMA AQUI sem ser com abort
 chase(spider-man) :-
 	loc(spider-man, L),
 	loc(thanos, L),
@@ -119,7 +127,7 @@ take(X) :-
 
 % mostra onde pessoa tá, o que tem e onde pode ir
 look :-
-	write("thanos are in the "),
+	write("thanos are in "),
 	loc(thanos, L), write(L), nl,
 	look_connect(L),
 	look_here(L),
