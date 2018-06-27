@@ -9,10 +9,13 @@ loc(doctor-strange,knowhere).
 loc(thanos,knowhere).
 loc(spider-man,wakanda).
 loc(black-widow,vormir).
+loc(iron-man,vormir).
 
 loc(power,knowhere).
 loc(time,asgard).
 loc(space,wakanda).
+loc(reality,vormir).
+loc(armor,vormir).
 
 move(Item, Place) :-
 	retract( loc(Item, _) ),
@@ -29,6 +32,7 @@ done :-
 	loc(power, thanos),
 	loc(space, thanos),
 	loc(time, thanos),
+	loc(reality, thanos),
 	write("Thanos have all the stones!"), nl.
 
 % define pessoas que se pode chase
@@ -52,7 +56,7 @@ spider-man :-
 spider-man.
 
 black-widow :-
-	loc(black-widow, vormir),
+	loc(black-widow, wakanda),
 	loc(thanos, vormir),
 	write("The black widow seems to be calling to S.H.I.E.L.D. Be carefull."), nl.
 black-widow.
@@ -67,6 +71,14 @@ goto(_) :-
 	write("thanos can't get there from here."), nl.
 
 % comando novo. Attack heroe
+
+% if iron man tem armadura thanos perder, senão pega a pedra.
+attack(iron-man) :-
+	loc(armor,iron-man) -> write("You lost Thanos"),abort ;
+	loc(iron-man, L),
+	loc(thanos, L),
+	write("Thanos hit doctor-strange.... Congratulations! You now have the reality stone."), nl,
+	move(reality,thanos).
 attack(black-widow) :-
 	loc(black-widow, L),
 	loc(thanos, L),
@@ -91,6 +103,9 @@ attack(_):-
 	
 
 % caça algum heroe. Pode caçar se tiver no mesmo lugar.
+chase(iron-man) :-
+	move(armor,iron-man),
+	write("Oh, Tony Stark apparently is looking for his armor now"), nl.
 chase(black-widow) :-
 	write("The black widow came behind your back and make you fall.."), nl,
 	write("The spider-man is attacking your hand that has the gauntlet..."), nl,
@@ -109,6 +124,8 @@ chase(_):-
 	write("The heroe is not here."), nl.
 
 % função que pega um item. Pode pegar se pessoa tiver no mesmo lugar q o item.
+take(armor) :-
+	write("Iron man will never let you get close to his armor.."), nl.
 take(power) :-
 	move(power,vormir),
 	write("Black widow passes behind you and take the power stone with her...You will need to attack her to get stone."), nl.
@@ -121,7 +138,7 @@ take(X) :-
 	loc(thanos, L),
 	loc(X, L),
 	move(X, thanos),
-	write("thanos now have the "), write(X),write(" stone."), nl.
+	write("Thanos now have the "), write(X),write(" stone."), nl.
 take(X) :-
 	write("There is no "), write(X), write(" here."), nl.
 
@@ -186,7 +203,7 @@ go :- write(" Quitter "), nl.
 instructions :-
 	nl,
 	write("Thanos start in his home, with the gauntlet. "), nl,
-	write("Thanos have to get the others stones. "), nl,
+	write("Thanos have to get the others stones and take them back into his home. "), nl,
 	nl,
 	write("Enter commands at the prompt as Prolog terms"), nl,
 	write("ending in period:"), nl,
