@@ -59,8 +59,8 @@ goto(_) :-
 attack(doctor-strange) :-
 	loc(doctor-strange, L),
 	loc(thanos, L),
-	write("thanos hit doctor-strange."),
-	take(reality).
+	write("thanos hit doctor-strange.... Congratulations! You now have the reality stone."), nl,
+	move(reality,thanos).
 attack(_):-
 	write("No doctor-strange here."), nl.
 	
@@ -75,6 +75,8 @@ chase(_):-
 	write("No doctor-strange here."), nl.
 
 % função que pega um item. Pode pegar se pessoa tiver no mesmo lugar q o item.
+take(reality) :-
+	write("Doctor strange has the reality stone and it won't give you without some fight..."), nl.
 take(X) :-
 	%X= reality -> write("reality") ; 
 	loc(thanos, L),
